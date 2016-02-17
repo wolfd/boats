@@ -1,0 +1,360 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     15939,        351]
+NotebookOptionsPosition[     15475,        332]
+NotebookOutlinePosition[     15838,        348]
+CellTagsIndexPosition[     15795,        345]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<BoatContext`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"libboatLocation", "=", "\"\</home/wolf/qea/libboat.nb\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"libboat", "=", 
+   RowBox[{"NotebookOpen", "[", "libboatLocation", "]"}]}], ";"}], "\n", 
+ RowBox[{"SelectionMove", "[", 
+  RowBox[{"libboat", ",", "All", ",", "Notebook"}], "]"}], "\n", 
+ RowBox[{"SelectionEvaluate", "[", "libboat", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.6646957484682083`*^9, 3.66469578130228*^9}, {
+   3.66469585647468*^9, 3.664695944589684*^9}, {3.664695977412403*^9, 
+   3.664696015722187*^9}, {3.664696110073378*^9, 3.664696110431981*^9}, {
+   3.664696189032383*^9, 3.664696189633768*^9}, {3.664696241890115*^9, 
+   3.6646962766723337`*^9}, {3.664696354821718*^9, 3.664696355443962*^9}, {
+   3.664696789992085*^9, 3.6646968043980913`*^9}, {3.664696909223818*^9, 
+   3.66469697387847*^9}, {3.664697013655052*^9, 3.664697015488886*^9}, {
+   3.664697056414516*^9, 3.664697068188436*^9}, {3.664697098752349*^9, 
+   3.6646971063735533`*^9}, {3.664697149375395*^9, 3.664697153619931*^9}, {
+   3.6646971984534683`*^9, 3.664697246405456*^9}, {3.664697370942933*^9, 
+   3.664697399090749*^9}, {3.6646978389448023`*^9, 3.664697858913142*^9}, {
+   3.664697946149563*^9, 3.664697947094035*^9}, {3.664697984455207*^9, 
+   3.664698008810586*^9}, {3.6646980529607563`*^9, 3.664698090425251*^9}, {
+   3.664698206694282*^9, 3.66469825297878*^9}, {3.6646989386110897`*^9, 
+   3.664698965078535*^9}, {3.66469906770883*^9, 3.664699072007962*^9}, {
+   3.6646996680813303`*^9, 3.664699669411791*^9}, {3.6647002889879503`*^9, 
+   3.6647002893932667`*^9}, {3.664700456266265*^9, 3.664700517031055*^9}, {
+   3.66470669026687*^9, 3.66470670328296*^9}, {3.664706777120487*^9, 
+   3.664706912171088*^9}, {3.664706945744837*^9, 3.664707017847609*^9}, {
+   3.6647070485594463`*^9, 3.664707050943492*^9}, {3.664707104012745*^9, 
+   3.664707329494124*^9}, {3.6647074343582363`*^9, 3.664707648592431*^9}, {
+   3.664707703644136*^9, 3.664707830174026*^9}, {3.664708141226733*^9, 
+   3.664708206934821*^9}, {3.664708587866591*^9, 3.664708796922303*^9}, {
+   3.6647089632395144`*^9, 3.664709004774673*^9}, {3.664709120985005*^9, 
+   3.6647091711260033`*^9}, {3.6647093408657293`*^9, 
+   3.6647093480691843`*^9}, {3.664709398447583*^9, 3.664709399631205*^9}, {
+   3.664709440406221*^9, 3.6647096172408447`*^9}, {3.66470968700707*^9, 
+   3.6647096874748907`*^9}, {3.664709733056497*^9, 3.6647097965908737`*^9}, {
+   3.664709833048622*^9, 3.664709912883317*^9}, {3.664709993671132*^9, 
+   3.6647102217856007`*^9}, {3.6647102612570744`*^9, 3.664710355881874*^9}, {
+   3.664710458969116*^9, 3.664710476486082*^9}, {3.6647105160988703`*^9, 
+   3.664710517453354*^9}, {3.664710566455585*^9, 3.6647106214703503`*^9}, {
+   3.664710655269967*^9, 3.6647106874567423`*^9}, {3.664710914411255*^9, 
+   3.664710961840914*^9}, {3.6647110709012403`*^9, 3.664711120148699*^9}, {
+   3.6647112816515617`*^9, 3.664711324662641*^9}, {3.6647114162790318`*^9, 
+   3.664711480503903*^9}, {3.6647115466186447`*^9, 3.664711724699603*^9}, {
+   3.664711788134172*^9, 3.6647118012086363`*^9}, 3.664718079878172*^9, {
+   3.6647182117815027`*^9, 3.664718285571217*^9}, {3.664718330826974*^9, 
+   3.664718341965672*^9}, {3.664718474338214*^9, 3.6647185299534388`*^9}, {
+   3.664718615769204*^9, 3.6647186380812387`*^9}, {3.6647186698452673`*^9, 
+   3.6647186783427963`*^9}, {3.66473494897462*^9, 3.6647349492295303`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Generate", " ", "point", " ", "cloud"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"bouyHull", "=", 
+     RowBox[{"Import", "[", 
+      RowBox[{
+      "\"\</home/wolf/qea/bhull.stl\>\"", ",", "\"\<BoundaryMeshRegion\>\""}],
+       "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"bouyHullVolume", "=", 
+     RowBox[{
+      RowBox[{"Volume", "[", "bouyHull", "]"}], 
+      TemplateBox[{InterpretationBox["\[InvisibleSpace]", 1],RowBox[{
+          SuperscriptBox["\"cm\"", "3"]}],"centimeters cubed",SuperscriptBox[
+        "\"Centimeters\"", "3"]},
+       "Quantity"]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"bouyHullPoints", "=", 
+     RowBox[{"pointCloud", "[", 
+      RowBox[{"bouyHull", ",", "1000000"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hull", "=", 
+     RowBox[{"Import", "[", 
+      RowBox[{
+      "\"\</home/wolf/qea/hull.stl\>\"", ",", "\"\<BoundaryMeshRegion\>\""}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hullVolume", "=", 
+     RowBox[{
+      RowBox[{"Volume", "[", "bouyHull", "]"}], 
+      TemplateBox[{InterpretationBox["\[InvisibleSpace]", 1],RowBox[{
+          SuperscriptBox["\"cm\"", "3"]}],"centimeters cubed",SuperscriptBox[
+        "\"Centimeters\"", "3"]},
+       "Quantity"]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hullCentroid", "=", 
+     RowBox[{"RegionCentroid", "[", "hull", "]"}]}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.6646982846210537`*^9, 3.664698380598084*^9}, {
+   3.664698416145689*^9, 3.6646984341927834`*^9}, {3.664698813769145*^9, 
+   3.6646988194377623`*^9}, {3.664698876225996*^9, 3.664698894446013*^9}, {
+   3.664700001570763*^9, 3.664700034659746*^9}, {3.664700200472093*^9, 
+   3.664700209309938*^9}, {3.664703898651926*^9, 3.664703911665319*^9}, {
+   3.6647039852881613`*^9, 3.664703988923704*^9}, 3.6647042005337753`*^9, {
+   3.664704571773307*^9, 3.664704600472981*^9}, {3.66470485789305*^9, 
+   3.66470486604036*^9}, {3.664705002173562*^9, 3.664705061837286*^9}, 
+   3.6647050976364813`*^9, {3.6647061106007338`*^9, 3.664706120751904*^9}, {
+   3.664709214496207*^9, 3.664709215221624*^9}, {3.664718665061535*^9, 
+   3.66471866849293*^9}, {3.664729740293313*^9, 3.6647297447348547`*^9}, {
+   3.6647330525550528`*^9, 3.6647330531558723`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", "Constants", " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"g", "=", 
+     RowBox[{"GeogravityModelData", "[", 
+      RowBox[{
+       RowBox[{"CityData", "[", 
+        RowBox[{
+         TemplateBox[{"\"Needham\"",RowBox[{"Entity", "[", 
+             RowBox[{"\"City\"", ",", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "\"Needham\"", ",", "\"Massachusetts\"", ",", 
+                   "\"UnitedStates\""}], "}"}]}], "]"}],
+           "\"Entity[\\\"City\\\", {\\\"Needham\\\", \\\"Massachusetts\\\", \
+\\\"UnitedStates\\\"}]\"","\"city\""},
+          "Entity"], ",", "\"\<Coordinates\>\""}], "]"}], ",", 
+       "\"\<DownComponent\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"blueFoamDensity", "=", 
+     RowBox[{"0.0317", 
+      TemplateBox[{
+       InterpretationBox["\[InvisibleSpace]", 1],
+        RowBox[{"\"g\"", "\[InvisibleSpace]", "\"/\"", "\[InvisibleSpace]", 
+          SuperscriptBox["\"cm\"", "3"]}],"grams per centimeter cubed",
+        FractionBox["\"Grams\"", 
+         SuperscriptBox["\"Centimeters\"", "3"]]},
+       "Quantity"]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"waterDensity", "=", 
+     RowBox[{"1", 
+      TemplateBox[{
+       InterpretationBox["\[InvisibleSpace]", 1],
+        RowBox[{"\"g\"", "\[InvisibleSpace]", "\"/\"", "\[InvisibleSpace]", 
+          SuperscriptBox["\"cm\"", "3"]}],"grams per centimeter cubed",
+        FractionBox["\"Grams\"", 
+         SuperscriptBox["\"Centimeters\"", "3"]]},
+       "Quantity"]}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.6647061249751673`*^9, 3.6647061573953*^9}, {
+  3.664710693229361*^9, 3.6647106939397783`*^9}, {3.66471075647164*^9, 
+  3.6647108242026253`*^9}, {3.66472187362237*^9, 3.664721881749362*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"can1Loc", "=", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"boat", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"<|", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"name", "\[Rule]", "\"\<BouyHull\>\""}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"type", "\[Rule]", "\"\<Bouy\>\""}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"mass", "\[Rule]", 
+        RowBox[{"bouyHullVolume", "*", "waterDensity"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"volume", "\[Rule]", "bouyHullVolume"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"points", "\[Rule]", "bouyHullPoints"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"render", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"GraphicsComplex", "[", 
+          RowBox[{
+           RowBox[{"MeshCoordinates", "@", "bouyHull"}], ",", 
+           RowBox[{"MeshCells", "[", 
+            RowBox[{"bouyHull", ",", "2"}], "]"}]}], "]"}], "}"}]}]}], 
+      "\[IndentingNewLine]", "|>"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"<|", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"name", "\[Rule]", "\"\<Hull\>\""}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"type", "\[Rule]", "\"\<PointMass\>\""}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"mass", "\[Rule]", 
+        RowBox[{"hullVolume", "*", "blueFoamDensity"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"volume", "\[Rule]", "hullVolume"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"com", "\[Rule]", 
+        RowBox[{"Quantity", "[", 
+         RowBox[{"hullCentroid", ",", "\"\<Centimeters\>\""}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"render", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"GraphicsComplex", "[", 
+          RowBox[{
+           RowBox[{"MeshCoordinates", "@", "hull"}], ",", 
+           RowBox[{"MeshCells", "[", 
+            RowBox[{"hull", ",", "2"}], "]"}]}], "]"}], "}"}]}]}], 
+      "\[IndentingNewLine]", "|>"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"<|", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"name", "\[Rule]", "\"\<Can\>\""}], ",", "\[IndentingNewLine]", 
+       RowBox[{"type", "\[Rule]", "\"\<PointMass\>\""}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"mass", "\[Rule]", 
+        RowBox[{"5", 
+         TemplateBox[{
+          InterpretationBox["\[InvisibleSpace]", 1],"\"g\"","grams",
+           "\"Grams\""},
+          "Quantity"]}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"volume", "\[Rule]", 
+        TemplateBox[{
+         InterpretationBox["\[InvisibleSpace]", 1],
+          "\"volumes of a US soda can\"","volumes of a US soda can",
+          "\"USSodaCanVolumes\""},
+         "Quantity"]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"com", "\[Rule]", 
+        RowBox[{"Quantity", "[", 
+         RowBox[{"can1Loc", ",", "\"\<Centimeters\>\""}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"render", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+          RowBox[{"Point", "[", "can1Loc", "]"}]}], "}"}]}]}], 
+      "\[IndentingNewLine]", "|>"}]}], "\[IndentingNewLine]", "}"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.6647039915829687`*^9, 3.664704035502009*^9}, {
+   3.664704095294242*^9, 3.6647041643757*^9}, {3.6647042160790167`*^9, 
+   3.664704348885541*^9}, {3.664704391237822*^9, 3.664704554346246*^9}, {
+   3.664704612135396*^9, 3.664704749629684*^9}, {3.664704784044147*^9, 
+   3.664704792309802*^9}, {3.664704832593478*^9, 3.664704847730689*^9}, {
+   3.6647049049137907`*^9, 3.664704929653914*^9}, {3.66470496455412*^9, 
+   3.664704974144504*^9}, {3.6647050877264347`*^9, 3.664705088634473*^9}, {
+   3.664705161257494*^9, 3.664705193492774*^9}, 3.664705350690613*^9, {
+   3.6647061672350597`*^9, 3.664706167610734*^9}, {3.66470622748759*^9, 
+   3.6647062277627*^9}, 3.664706488848639*^9, {3.664709052778764*^9, 
+   3.664709059045382*^9}, {3.664709256437834*^9, 3.664709277238265*^9}, {
+   3.664709700510323*^9, 3.66470970072978*^9}, 3.6647180011471577`*^9, {
+   3.664720318912198*^9, 3.6647203199911823`*^9}, {3.664729750582429*^9, 
+   3.66472977242938*^9}, {3.6647304722663116`*^9, 3.664730499332045*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"DistributeDefinitions", "[", "\"\<BoatContext`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"stuff", "=", 
+   RowBox[{"Parallelize", "[", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"renderBoat", "[", 
+       RowBox[{"boat", ",", 
+        RowBox[{"Normalize", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Cos", "[", "\[Theta]", "]"}], ",", "0", ",", 
+           RowBox[{"Sin", "[", "\[Theta]", "]"}]}], "}"}], "]"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]", ",", "0", ",", 
+        RowBox[{"Pi", "/", "2"}], ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"Pi", "/", "2"}], ")"}], "/", "10"}]}], "}"}]}], 
+     "\[IndentingNewLine]", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.664709015652692*^9, 3.664709026860196*^9}, {
+   3.6647118239010077`*^9, 3.664711849121616*^9}, {3.664718805523068*^9, 
+   3.664718808187344*^9}, {3.664718925108314*^9, 3.664718928172461*^9}, {
+   3.664719247484769*^9, 3.664719250362578*^9}, {3.664719369843858*^9, 
+   3.664719371708394*^9}, {3.664721754493384*^9, 3.6647217658064404`*^9}, {
+   3.664728915497332*^9, 3.664728925998315*^9}, {3.6647291875352793`*^9, 
+   3.6647291895650463`*^9}, {3.664729247123616*^9, 3.6647292523774652`*^9}, {
+   3.6647292915476313`*^9, 3.664729296398697*^9}, 3.6647293446668987`*^9, {
+   3.664729385044178*^9, 3.664729411383458*^9}, {3.6647295024253063`*^9, 
+   3.6647295031337357`*^9}, {3.664731295563491*^9, 3.6647312958630533`*^9}, {
+   3.664731531054188*^9, 3.664731551330654*^9}, {3.664731673047093*^9, 
+   3.664731679988019*^9}, 3.664731799830337*^9, {3.6647321624619503`*^9, 
+   3.664732249435789*^9}, {3.6647323027651443`*^9, 3.66473230951726*^9}, {
+   3.664732923718096*^9, 3.664732933958198*^9}, {3.664733830968869*^9, 
+   3.6647338314414787`*^9}, {3.664733861744796*^9, 3.664733864369083*^9}, {
+   3.664734044975155*^9, 3.664734056864752*^9}, {3.6647341905060368`*^9, 
+   3.664734193498386*^9}, {3.6647353675851517`*^9, 3.664735384413259*^9}, {
+   3.664735489996181*^9, 3.664735509472116*^9}, {3.664735637405251*^9, 
+   3.6647356448554287`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"wNormal", "=", 
+   RowBox[{"Normalize", "[", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "0", ",", "1"}], "}"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"calculateMoments", "[", 
+  RowBox[{"boat", ",", "wNormal"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.664735325628806*^9, 3.664735345448411*^9}}]
+},
+WindowSize->{960, 1016},
+WindowMargins->{{-10, Automatic}, {Automatic, -8}},
+CellContext->Notebook,
+FrontEndVersion->"10.3 for Linux x86 (64-bit) (December 10, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 3647, 56, 186, "Input"],
+Cell[4208, 78, 2460, 54, 246, "Input"],
+Cell[6671, 134, 1854, 43, 140, "Input"],
+Cell[8528, 179, 4354, 95, 695, "Input"],
+Cell[12885, 276, 2239, 43, 161, "Input"],
+Cell[15127, 321, 344, 9, 61, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
