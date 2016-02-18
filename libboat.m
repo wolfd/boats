@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Input:: *)
-(*Begin["BoatContext`"];*)
+(*BeginPackage["BoatContext`"];*)
 (**)
 (*(* DEBUG THING *)*)
 (*ClearAll[debug];*)
@@ -221,4 +221,4 @@
 (*Show[renderBoat[boat,wNormal],Graphics3D[{wVecs,bVec,mVecs}]]*)
 (*];*)
 (**)
-(*End[];*)
+(*EndPackage[];*)

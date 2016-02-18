@@ -1,0 +1,858 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     33047,        848]
+NotebookOptionsPosition[     32806,        835]
+NotebookOutlinePosition[     33146,        850]
+CellTagsIndexPosition[     33103,        847]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Begin", "[", "\"\<BoatContext`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"DEBUG", " ", "THING"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "debug", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"debug", ",", "HoldAll"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"debug", "[", "code_", "]"}], ":=", 
+   RowBox[{"Internal`InheritedBlock", "[", 
+    RowBox[{
+     RowBox[{"{", "Message", "}"}], ",", 
+     RowBox[{
+      RowBox[{"Module", "[", 
+       RowBox[{
+        RowBox[{"{", "inMessage", "}"}], ",", 
+        RowBox[{
+         RowBox[{"Unprotect", "[", "Message", "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Message", "[", "args___", "]"}], "/;", 
+           RowBox[{"!", 
+            RowBox[{"MatchQ", "[", 
+             RowBox[{
+              RowBox[{"First", "[", 
+               RowBox[{"Hold", "[", "args", "]"}], "]"}], ",", "_$Off"}], 
+             "]"}]}]}], ":=", 
+          RowBox[{
+           RowBox[{"Block", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"inMessage", "=", "True"}], "}"}], ",", 
+             RowBox[{
+              RowBox[{"Print", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"Shallow", "/@", 
+                    RowBox[{"Replace", "[", 
+                    RowBox[{"#", ",", 
+                    RowBox[{
+                    RowBox[{"HoldForm", "[", 
+                    RowBox[{"f_", "[", "___", "]"}], "]"}], "\[RuleDelayed]", 
+                    
+                    RowBox[{"HoldForm", "[", "f", "]"}]}], ",", "1"}], 
+                    "]"}]}], ",", 
+                   RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{"Map", "[", 
+                    RowBox[{"Short", ",", 
+                    RowBox[{"Last", "[", "#", "]"}], ",", 
+                    RowBox[{"{", "2", "}"}]}], "]"}], ",", "Red"}], "]"}]}], 
+                  "}"}], "&"}], "@", 
+                RowBox[{"Drop", "[", 
+                 RowBox[{
+                  RowBox[{"Drop", "[", 
+                   RowBox[{
+                    RowBox[{"Stack", "[", "_", "]"}], ",", 
+                    RowBox[{"-", "7"}]}], "]"}], ",", "4"}], "]"}]}], "]"}], 
+              ";", "\[IndentingNewLine]", 
+              RowBox[{"Message", "[", "args", "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Throw", "[", 
+               RowBox[{"$Failed", ",", "Message"}], "]"}], ";"}]}], "]"}], "/;", 
+           RowBox[{"!", 
+            RowBox[{"TrueQ", "[", "inMessage", "]"}]}]}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Protect", "[", "Message", "]"}], ";"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Catch", "[", 
+       RowBox[{
+        RowBox[{"StackComplete", "[", "code", "]"}], ",", "Message"}], 
+       "]"}]}]}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Generate", " ", "point", " ", "cloud", " ", "from", " ", 
+    "BoundaryMeshRegion"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pointCloud", "[", 
+     RowBox[{
+      RowBox[{"reg_", "?", "RegionQ"}], ",", "numPoints_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"RandomPoint", "[", 
+     RowBox[{"reg", ",", "numPoints"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "sortPoints", "]"}], ";"}], "\[IndentingNewLine]", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"sortPoints", "[", 
+     RowBox[{"pts_", ",", "normal_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"sortPoints", "[", 
+      RowBox[{"pts", ",", "normal"}], "]"}], "=", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{"False", ",", "\[IndentingNewLine]", 
+       RowBox[{"CUDASort", "[", 
+        RowBox[{"CUDADot", "[", 
+         RowBox[{"pts", ",", 
+          RowBox[{"N", "[", "normal", "]"}]}], "]"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Sort", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", ".", "normal"}], "&"}], "/@", "pts"}], "]"}]}], 
+      "\[IndentingNewLine]", "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "waterLineOld", "]"}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Returns", " ", "the", " ", "index", " ", "that", " ", "puts", " ", "a", 
+    " ", "certain", " ", "portion", " ", "of", " ", "the", " ", "volume", " ",
+     "underwater"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"waterLineOld", "[", 
+     RowBox[{
+     "pts_", ",", "normal_", ",", "meshVolume_", ",", "volumeUnderwater_"}], 
+     "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"waterLineOld", "[", 
+      RowBox[{
+      "pts", ",", "normal", ",", "meshVolume", ",", "volumeUnderwater"}], 
+      "]"}], "=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"numPoints", ",", "dists"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"numPoints", "=", 
+         RowBox[{
+          RowBox[{"volumeUnderwater", "/", "meshVolume"}], " ", "*", " ", 
+          RowBox[{"Length", "[", "pts", "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"dists", "=", 
+         RowBox[{"sortPoints", "[", 
+          RowBox[{"pts", ",", "normal"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Possible", " ", 
+          RowBox[{"improvement", ":", " ", 
+           RowBox[{
+           "linear", " ", "interpolate", " ", "between", " ", "values", " ", 
+            "at", " ", "two", " ", "points"}]}]}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"dists", "[", 
+         RowBox[{"[", 
+          RowBox[{"Floor", "[", "numPoints", "]"}], "]"}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "waterLine", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"waterLine", "[", 
+     RowBox[{"boat_", ",", "normal_", ",", "desiredVolumeUnderwater_"}], 
+     "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "bouys", ",", "bouy", ",", "bPoints", ",", "fullySubmergedVolume", ",",
+         "indexOfWaterLine", ",", "pointDistances"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"bouys", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Bouy\>\""}], 
+           "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+         "Only", " ", "one", " ", "bouy", " ", "object", " ", "per", " ", 
+          "boat", " ", "is", " ", "allowed"}], ",", " ", 
+         RowBox[{
+         "due", " ", "to", " ", "different", " ", "point", " ", "masses"}]}], 
+        " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Length", "[", "bouys", "]"}], "\[NotEqual]", "1"}], ",", 
+         RowBox[{
+         "Throw", "[", "\"\<No don't do that, one bouy per boat please\>\"", 
+          "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"bouy", "=", 
+        RowBox[{"bouys", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+         "These", " ", "operations", " ", "are", " ", "for", " ", "many", " ",
+           "bouys"}], ",", " ", 
+         RowBox[{
+         "but", " ", "only", " ", "one", " ", "bouy", " ", "is", " ", 
+          "valid"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"fullySubmergedVolume", "=", 
+        RowBox[{"volume", "/.", "bouy"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"bPoints", "=", 
+        RowBox[{"points", "/.", "bouy"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Find", " ", "how", " ", "many", " ", "points", " ", "are", " ", 
+         "underwater"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"indexOfWaterLine", "=", 
+        RowBox[{
+         RowBox[{"desiredVolumeUnderwater", "/", "fullySubmergedVolume"}], 
+         "*", 
+         RowBox[{"Length", "[", "bPoints", "]"}]}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Index", " ", "must", " ", "be", " ", "in", " ", "range", " ", "of", 
+         " ", "points"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"indexOfWaterLine", "<", "1"}], ",", 
+         RowBox[{"Throw", "[", "\"\<Index not >= 1\>\"", "]"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"indexOfWaterLine", ">", 
+          RowBox[{"Length", "[", "bPoints", "]"}]}], ",", 
+         RowBox[{"Throw", "[", "\"\<Index > number of points\>\"", "]"}]}], 
+        "]"}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"pointDistances", "=", 
+        RowBox[{"sortPoints", "[", 
+         RowBox[{"bPoints", ",", "normal"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Possible", " ", 
+         RowBox[{"improvement", ":", " ", 
+          RowBox[{
+          "linear", " ", "interpolate", " ", "between", " ", "values", " ", 
+           "at", " ", "two", " ", "points"}]}]}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"pointDistances", "[", 
+        RowBox[{"[", 
+         RowBox[{"Floor", "[", "indexOfWaterLine", "]"}], "]"}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "calculateVolumeUnderwater", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"calculateVolumeUnderwater", "[", "boat_", "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"calculateVolumeUnderwater", "[", "boat", "]"}], "=", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"boatMass", ",", "displacedWaterVolume"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"boatMass", "=", 
+         RowBox[{"Sum", "[", 
+          RowBox[{
+           RowBox[{"p", "[", "mass", "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"p", ",", 
+             RowBox[{"Select", "[", 
+              RowBox[{"boat", ",", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"#", "[", "type", "]"}], "\[Equal]", 
+                 "\"\<PointMass\>\""}], "&"}]}], "]"}]}], "}"}]}], "]"}]}], 
+        ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"displacedWaterVolume", "=", 
+         RowBox[{"boatMass", "/", "waterDensity"}]}]}]}], 
+      "\[IndentingNewLine]", "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "calculateWaterLine", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"calculateWaterLine", "[", 
+    RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"calculateWaterLine", "[", 
+     RowBox[{"boat", ",", "wNormal"}], "]"}], "=", "\[IndentingNewLine]", 
+    RowBox[{"waterLine", "[", 
+     RowBox[{"boat", ",", "wNormal", ",", 
+      RowBox[{"calculateVolumeUnderwater", "[", "boat", "]"}]}], "]"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"calculateForces", "[", 
+     RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "bouys", ",", "bouy", ",", "masses", ",", "weightForces", ",", 
+        "bouyancyForce"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"bouys", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Bouy\>\""}], 
+           "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Assume", " ", "prior", " ", "exception", " ", "thrown", " ", "if", 
+         " ", "not", " ", "1", " ", "element"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"bouy", "=", 
+        RowBox[{"bouys", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"masses", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", 
+            "\"\<PointMass\>\""}], "&"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Calculate", " ", "the", " ", "forces"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"bouyancyForce", "=", 
+        RowBox[{
+         RowBox[{"calculateVolumeUnderwater", "[", "boat", "]"}], "*", 
+         "waterDensity", "*", "g", "*", "wNormal"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"weightForces", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "*", 
+           RowBox[{"(", 
+            RowBox[{"g", "*", 
+             RowBox[{"-", "wNormal"}]}], ")"}]}], "&"}], "/@", 
+         RowBox[{"(", 
+          RowBox[{"mass", "/.", "masses"}], ")"}]}]}], ";", " ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Tricky", " ", "replacement", " ", "bullshit"}], " ", "*)"}], 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"<|", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"wfs", "\[Rule]", " ", "weightForces"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"bf", "\[Rule]", "bouyancyForce"}]}], "\[IndentingNewLine]", 
+        "|>"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Find", " ", "the", " ", "points", " ", "of", " ", "the", " ", "bouyHull", 
+    " ", "of", " ", "a", " ", "boat", " ", "when", " ", "translational", " ", 
+    "forces", " ", "are", " ", "at", " ", "equib"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"pointsBelowWaterLine", "[", 
+     RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"bouy", ",", "waterHeight"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"bouy", "=", 
+        RowBox[{
+         RowBox[{"Select", "[", 
+          RowBox[{"boat", ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Bouy\>\""}], 
+            "&"}]}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"waterHeight", "=", 
+        RowBox[{"calculateWaterLine", "[", 
+         RowBox[{"boat", ",", "wNormal"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"Dot", " ", "products"}], ",", " ", 
+         RowBox[{
+         "get", " ", "all", " ", "points", " ", "that", " ", "are", " ", 
+          "below", " ", "the", " ", "water", " ", "height"}]}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"pointsBelowWater", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{
+          RowBox[{"points", "/.", "bouy"}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", ".", "wNormal"}], "<=", "waterHeight"}], "&"}]}], 
+         "]"}]}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"calculateCOM", "[", "boat_", "]"}], ":=", "\[IndentingNewLine]", 
+    
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"masses", ",", "coms", ",", "ms"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"masses", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", 
+            "\"\<PointMass\>\""}], "&"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"coms", "=", 
+        RowBox[{"com", "/.", "masses"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"ms", "=", 
+        RowBox[{"mass", "/.", "masses"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"Plus", "@@", 
+          RowBox[{"(", 
+           RowBox[{"coms", "*", "ms"}], ")"}]}], ")"}], "/", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Plus", "@@", "ms"}]}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Find", " ", "the", " ", "COB", " ", "of", " ", "a", " ", "boat", " ", 
+    "when", " ", "translational", " ", "forces", " ", "are", " ", "at", " ", 
+    "equib"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"calculateCOB", "[", 
+     RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "points", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"points", "=", 
+        RowBox[{"pointsBelowWaterLine", "[", 
+         RowBox[{"boat", ",", "wNormal"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Quantity", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Sum", "[", 
+           RowBox[{"p", ",", 
+            RowBox[{"{", 
+             RowBox[{"p", ",", "points"}], "}"}]}], "]"}], "/", 
+          RowBox[{"Length", "[", "points", "]"}]}], ",", 
+         "\"\<Centimeters\>\""}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"calculateMoments", "[", 
+     RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "bouys", ",", "bouy", ",", "masses", ",", "forces", ",", "bouyancy", 
+        ",", "weights", ",", "bouyR", ",", "bouyMoment", ",", "weightsR", ",",
+         "weightsMoments"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"bouys", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Bouy\>\""}], 
+           "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Assume", " ", "prior", " ", "exception", " ", "thrown", " ", "if", 
+         " ", "not", " ", "1", " ", "element"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"bouy", "=", 
+        RowBox[{"bouys", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"masses", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", 
+            "\"\<PointMass\>\""}], "&"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Calculate", " ", "the", " ", "forces"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"forces", "=", 
+        RowBox[{"calculateForces", "[", 
+         RowBox[{"boat", ",", "wNormal"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"weights", "=", 
+        RowBox[{"wfs", "/.", "forces"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"bouyancy", "=", 
+        RowBox[{"bf", "/.", "forces"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Bouyancy", " ", "moment"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"bouyR", "=", 
+        RowBox[{"calculateCOB", "[", 
+         RowBox[{"boat", ",", "wNormal"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"bouyMoment", "=", 
+        RowBox[{"Cross", "[", 
+         RowBox[{"bouyR", ",", "bouyancy"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Calculate", " ", "weights", " ", "moments"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"weightsR", "=", 
+        RowBox[{"com", "/.", "masses"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"weightsMoments", "=", 
+        RowBox[{"Cross", "@@@", 
+         RowBox[{"Transpose", "[", 
+          RowBox[{"{", 
+           RowBox[{"weightsR", ",", "weights"}], "}"}], "]"}]}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Return", " ", "the", " ", "moments"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{"weightsMoments", ",", "bouyMoment"}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"plotAVSMoments", "[", 
+     RowBox[{"boat_", ",", "samplePoints_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"moments", ",", "momentInterp", ",", 
+        RowBox[{"maxAngle", "=", 
+         RowBox[{"Pi", "/", "2"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Parallelize", " ", "the", " ", "creation", " ", "of", " ", 
+        "moments"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"moments", "=", 
+        RowBox[{"Parallelize", "[", 
+         RowBox[{"Table", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"calculateMoments", "[", 
+            RowBox[{"boat", ",", 
+             RowBox[{"Normalize", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Cos", "[", "\[Theta]", "]"}], ",", "0", ",", 
+                RowBox[{"Sin", "[", "\[Theta]", "]"}]}], "}"}], "]"}]}], 
+            "]"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\[Theta]", ",", "0", ",", "maxAngle", ",", 
+             RowBox[{"maxAngle", "/", "samplePoints"}]}], "}"}]}], 
+          "\[IndentingNewLine]", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"momentInterp", "=", 
+        RowBox[{"ListInterpolation", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Table", "[", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Norm", "[", 
+             RowBox[{"Plus", "@@", 
+              RowBox[{"moments", "[", 
+               RowBox[{"[", "n", "]"}], "]"}]}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"{", 
+             RowBox[{"n", ",", 
+              RowBox[{"Length", "[", "moments", "]"}]}], "}"}]}], 
+           "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "maxAngle"}], "}"}]}], "\[IndentingNewLine]", 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"UnitConvert", "[", 
+          RowBox[{
+           RowBox[{"momentInterp", "[", "\[Theta]", "]"}], ",", 
+           "\"\<NewtonMeters\>\""}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"\[Theta]", ",", "0", ",", "maxAngle"}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"AxesLabel", "\[Rule]", "Automatic"}], ",", 
+         "\[IndentingNewLine]", "Label"}], "\[IndentingNewLine]", "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Converts", " ", "things", " ", "into", " ", "a", " ", "dimension", " ", 
+    "for", " ", "rendering", " ", 
+    RowBox[{"(", 
+     RowBox[{"based", " ", "on", " ", "STL", " ", "dimension"}], ")"}]}], " ",
+    "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"convertUnitsForRender", "[", "quant_", "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"UnitDimensions", "[", "quant", "]"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"renderBoat", "[", 
+     RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "wl", ",", "waterPlane", ",", "pointMassParts", ",", "bouyParts", ",", 
+        "cob"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "Calculate", " ", "waterline", " ", "to", " ", "plot", " ", "plane", 
+        " ", "on"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"wl", "=", 
+        RowBox[{"calculateWaterLine", "[", 
+         RowBox[{"boat", ",", "wNormal"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"waterPlane", "=", 
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", 
+          RowBox[{"Opacity", "[", "0.2", "]"}], ",", 
+          RowBox[{"HalfSpace", "[", 
+           RowBox[{"wNormal", ",", 
+            RowBox[{"wNormal", "*", "wl"}]}], "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "Grab", " ", "all", " ", "point", " ", "masses", " ", "to", " ", 
+         "render"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"pointMassParts", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", "type", "]"}], "\[Equal]", 
+            "\"\<PointMass\>\""}], "&"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Render", " ", "bouy"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"bouyParts", "=", 
+        RowBox[{
+         RowBox[{"Select", "[", 
+          RowBox[{"boat", ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Bouy\>\""}], 
+            "&"}]}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"cob", "=", 
+        RowBox[{"QuantityMagnitude", "[", 
+         RowBox[{"calculateCOB", "[", 
+          RowBox[{"boat", ",", "wNormal"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"Graphics3D", "[", 
+        RowBox[{"{", 
+         RowBox[{"waterPlane", ",", 
+          RowBox[{"render", "/.", "pointMassParts"}], ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"cobRender", "/.", "bouyParts"}], ")"}], "@", "cob"}]}], 
+         "}"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"renderBoatWithForces", "[", 
+     RowBox[{"boat_", ",", "wNormal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "front", ",", "forces", ",", "wForces", ",", "bForce", ",", 
+        "momentSum", ",", "com", ",", "scale", ",", "arrow", ",", "text", ",",
+         "wVecs", ",", "bVec", ",", "mVecs", ",", "mText"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"front", "=", 
+        RowBox[{"front", "/.", 
+         RowBox[{
+          RowBox[{"Select", "[", 
+           RowBox[{"boat", ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Bouy\>\""}], 
+             "&"}]}], "]"}], "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"forces", "=", 
+        RowBox[{"UnitConvert", "[", 
+         RowBox[{
+          RowBox[{"calculateForces", "[", 
+           RowBox[{"boat", ",", "wNormal"}], "]"}], ",", "\"\<Newtons\>\""}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"wForces", "=", 
+        RowBox[{"wfs", "/.", "forces"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"bForce", "=", 
+        RowBox[{"bf", "/.", "forces"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"momentSum", "=", 
+        RowBox[{"UnitConvert", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Plus", "@@", 
+           RowBox[{"calculateMoments", "[", 
+            RowBox[{"boat", ",", "wNormal"}], "]"}]}], ",", 
+          "\[IndentingNewLine]", "\"\<NewtonMeters\>\""}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"com", "=", 
+        RowBox[{"QuantityMagnitude", "[", 
+         RowBox[{"calculateCOM", "[", "boat", "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"scale", "=", "0.5"}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"arrow", "=", 
+        RowBox[{
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{"com", ",", 
+            RowBox[{"com", "+", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"QuantityMagnitude", "[", "#", "]"}], "*", "scale"}], 
+              ")"}]}]}], "}"}], "]"}], "&"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"text", "=", 
+        RowBox[{
+         RowBox[{"Text", "[", 
+          RowBox[{"#", ",", 
+           RowBox[{"com", "+", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"QuantityMagnitude", "[", "#", "]"}], "*", "scale"}], 
+             ")"}]}]}], "]"}], "&"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"wVecs", "=", 
+        RowBox[{"{", 
+         RowBox[{"Red", ",", 
+          RowBox[{"arrow", "/@", "wForces"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"bVec", "=", 
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", 
+          RowBox[{"arrow", "@", "bForce"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Arbitrary", " ", "numbers", " ", "to", " ", "scale"}], " ", 
+        "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"mVecs", "=", 
+        RowBox[{"{", 
+         RowBox[{"Purple", ",", 
+          RowBox[{"arrow", "@", 
+           RowBox[{"(", 
+            RowBox[{"momentSum", "*", "20"}], ")"}]}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"mText", "=", 
+        RowBox[{"{", 
+         RowBox[{"text", "@", "momentSum"}], "}"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"renderBoat", "[", 
+          RowBox[{"boat", ",", "wNormal"}], "]"}], ",", 
+         RowBox[{"Graphics3D", "[", 
+          RowBox[{"{", 
+           RowBox[{"wVecs", ",", "bVec", ",", "mVecs"}], "}"}], "]"}]}], 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.664813299496937*^9, 3.6648133170510674`*^9}}]
+},
+WindowSize->{976, 1016},
+WindowMargins->{{-10, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.3 for Linux x86 (64-bit) (December 10, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 32244, 813, 5661, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
