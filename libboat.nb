@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     42484,       1056]
-NotebookOptionsPosition[     42242,       1043]
-NotebookOutlinePosition[     42582,       1058]
-CellTagsIndexPosition[     42539,       1055]
+NotebookDataLength[     44165,       1098]
+NotebookOptionsPosition[     43926,       1085]
+NotebookOutlinePosition[     44263,       1100]
+CellTagsIndexPosition[     44220,       1097]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -146,6 +146,41 @@ Cell[BoxData[{
          RowBox[{
           RowBox[{"#", ".", "normal"}], "&"}], "/@", "pts"}], "]"}]}], 
       "\[IndentingNewLine]", "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"canLocationFinder", "[", 
+     RowBox[{"comHull_", ",", "distanceFromCOM_", ",", "deltaHeight_"}], 
+     "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"comHull", "+", 
+         RowBox[{"{", 
+          RowBox[{"distanceFromCOM", ",", "0", ",", "deltaHeight"}], "}"}]}], 
+        ",", 
+        RowBox[{"comHull", "+", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "distanceFromCOM"}], ",", "0", ",", "deltaHeight"}], 
+          "}"}]}]}], "}"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"mastLocationFinder", "[", 
+     RowBox[{"comHull_", ",", "deltaHeight_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"comHull", "+", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "deltaHeight"}], "}"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -701,10 +736,10 @@ Cell[BoxData[{
             RowBox[{"boat", ",", 
              RowBox[{"Normalize", "[", 
               RowBox[{"{", 
-               RowBox[{
+               RowBox[{"0", ",", 
                 RowBox[{"Sin", "[", "\[Theta]", "]"}], ",", 
-                RowBox[{"Cos", "[", "\[Theta]", "]"}], ",", "0"}], "}"}], 
-              "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"Cos", "[", "\[Theta]", "]"}]}], "}"}], "]"}]}], 
+            "]"}], ",", "\[IndentingNewLine]", 
            RowBox[{"{", 
             RowBox[{"\[Theta]", ",", 
              RowBox[{"range", "[", 
@@ -806,10 +841,10 @@ Cell[BoxData[{
          RowBox[{"boat", ",", 
           RowBox[{"Normalize", "[", 
            RowBox[{"{", 
-            RowBox[{
+            RowBox[{"0", ",", 
              RowBox[{"Sin", "[", "\[Theta]", "]"}], ",", 
-             RowBox[{"Cos", "[", "\[Theta]", "]"}], ",", "0"}], "}"}], 
-           "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"Cos", "[", "\[Theta]", "]"}]}], "}"}], "]"}]}], "]"}], 
+        ",", "\[IndentingNewLine]", 
         RowBox[{"{", 
          RowBox[{"\[Theta]", ",", 
           RowBox[{"-", "maxAngle"}], ",", "maxAngle", ",", 
@@ -897,9 +932,12 @@ Cell[BoxData[{
              RowBox[{"cobRender", "/.", "buoyParts"}], ")"}], "@", "cob"}], 
            ",", "\[IndentingNewLine]", "frontVec"}], "\[IndentingNewLine]", 
           "}"}], ",", "\[IndentingNewLine]", 
-         RowBox[{"ViewPoint", "\[Rule]", "Above"}]}], "]"}]}]}], 
-     "\[IndentingNewLine]", "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+         RowBox[{"ViewPoint", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "Infinity"}], ",", "0", ",", "0"}], "}"}]}]}], 
+        "\[IndentingNewLine]", "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1039,10 +1077,14 @@ Cell[BoxData[{
    3.664917572286017*^9, 3.6649176161853313`*^9}, {3.664917687054831*^9, 
    3.66491776105558*^9}, {3.6649177952342176`*^9, 3.66491779710802*^9}, {
    3.6649689947776823`*^9, 3.664969248723855*^9}, {3.66496930557377*^9, 
-   3.664969317283692*^9}}]
+   3.664969317283692*^9}, {3.664969563018861*^9, 3.6649695925382547`*^9}, {
+   3.664971382550474*^9, 3.664971399376328*^9}, {3.664971453504558*^9, 
+   3.66497157163623*^9}, {3.664971850707279*^9, 3.664971880617313*^9}, {
+   3.664973656342358*^9, 3.664973693004929*^9}, {3.6649740108189983`*^9, 
+   3.664974060706532*^9}, {3.664974124110066*^9, 3.664974124778429*^9}}]
 },
-WindowSize->{956, 1016},
-WindowMargins->{{Automatic, -10}, {Automatic, -8}},
+WindowSize->{960, 1016},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 FrontEndVersion->"10.3 for Linux x86 (64-bit) (December 10, 2015)",
 StyleDefinitions->"Default.nb"
 ]
@@ -1057,7 +1099,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 41680, 1021, 6836, "Input"]
+Cell[558, 20, 43364, 1063, 7111, "Input"]
 }
 ]
 *)
