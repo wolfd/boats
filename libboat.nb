@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     66411,       1617]
-NotebookOptionsPosition[     66169,       1604]
-NotebookOutlinePosition[     66509,       1619]
-CellTagsIndexPosition[     66466,       1616]
+NotebookDataLength[     67315,       1637]
+NotebookOptionsPosition[     67073,       1624]
+NotebookOutlinePosition[     67413,       1639]
+CellTagsIndexPosition[     67370,       1636]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -371,7 +371,9 @@ Cell[BoxData[{
     
     RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"{", "boatFiltered", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"boatFiltered", ",", "waterLineAssoc"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"boatFiltered", "=", 
         RowBox[{"KeyTake", "[", 
@@ -379,6 +381,21 @@ Cell[BoxData[{
           RowBox[{"{", 
            RowBox[{"name", ",", "type", ",", "com"}], "}"}]}], "]"}]}], ";", 
        "\[IndentingNewLine]", 
+       RowBox[{"waterLineAssoc", "=", 
+        RowBox[{"<|", 
+         RowBox[{
+          RowBox[{"\"\<name\>\"", "\[Rule]", "\"\<Water\>\""}], ",", 
+          RowBox[{"\"\<waterline\>\"", "\[Rule]", 
+           RowBox[{"calculateWaterLine", "[", 
+            RowBox[{"boat", ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "]"}]}]}], "|>"}]}],
+        ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"boatFiltered", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"boatFiltered", ",", 
+          RowBox[{"{", "waterLineAssoc", "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"(*", " ", 
         RowBox[{
          RowBox[{
@@ -407,6 +424,7 @@ Cell[BoxData[{
                  RowBox[{"QuantityMagnitude", "[", "#2", "]"}], ",", "#2"}], 
                 "]"}]}], "&"}], ",", "#"}], "]"}], "|>"}], "&"}], "/@", 
          "boatFiltered"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
        RowBox[{"Export", "[", 
         RowBox[{"filename", ",", 
          RowBox[{
@@ -1600,7 +1618,9 @@ Cell[BoxData[{
    3.665128357060206*^9, 3.665128436275737*^9}, {3.6651284881974983`*^9, 
    3.665128619859158*^9}, {3.665128653755067*^9, 3.6651286808892527`*^9}, {
    3.665128713904972*^9, 3.665128732086623*^9}, {3.665128798725216*^9, 
-   3.6651288769935083`*^9}}]
+   3.6651288769935083`*^9}, {3.665130693935008*^9, 3.6651308379226217`*^9}, {
+   3.665130871883218*^9, 3.665130876808619*^9}, {3.6651309169043913`*^9, 
+   3.6651309679305487`*^9}}]
 },
 WindowSize->{960, 1016},
 WindowMargins->{{Automatic, -10}, {Automatic, -8}},
@@ -1618,7 +1638,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 65607, 1582, 9477, "Input"]
+Cell[558, 20, 66511, 1602, 9602, "Input"]
 }
 ]
 *)
