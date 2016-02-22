@@ -4,6 +4,7 @@ from solid import *
 from solid.utils import *
 import subprocess
 import json
+import sys
 import os
 
 os.path.dirname(os.path.realpath(__file__))
@@ -27,46 +28,44 @@ def can_and_hole(t):
 
 def bailing_ports(t, water_height):
     port_length = 100
-    port_radius = 1
+    port_side = 1
 
     port = rotate([120, 0, 0])(
-        cylinder(h=port_length,r=port_radius)
+        cube([port_side, port_side, port_length])
     )
 
-    return translate([t[0], t[1], t[2] + can_radius + (port_radius * 2)])(
+    return translate([t[0], t[1], t[2] + can_radius + (port_side * 2)])(
         port
     )
+if __name__ == '__main__':
+    with open("boat.json","r") as f:
+        boat_def = json.load(f)
 
-boat = scale(100)(
-    import_stl("/home/wolf/qea/hulls/boats/experimentallemon.stl")
-)
+        boat_stl_file = filter(lambda o: o[u"name"] == u"STL", boat_def)[0]['location']
+        print boat_stl_file
+        boat_stl = scale(100)(
+            import_stl("{}".format(os.path.abspath(boat_stl_file)))
+        )
 
-with open("boat.json","r") as f:
-    boat_def = json.load(f)
-    print boat_def
-    import sys
+        cans = filter(lambda o: o[u"name"] == u"Can", boat_def)
 
-    cans = filter(lambda o: o[u"name"] == u"Can", boat_def)
+        # can1 = translate(boat_def[])
 
-    # can1 = translate(boat_def[])
-
-    with_can_holes = boat - [can_and_hole(c['com']) for c in cans]
+        boat = boat_stl - [can_and_hole(c['com']) for c in cans]
 
 
+        water = filter(lambda o: o[u"name"] == u"Water", boat_def)[0]['waterline']
 
-    water = filter(lambda o: o[u"name"] == u"Water", boat_def)[0]['waterline']
+        ports = [bailing_ports(c['com'], water) for c in cans]
+        flipped_ports = scale([1,-1,1])(ports)
 
-    ports = [bailing_ports(c['com'], water) for c in cans]
-    flipped_ports = scale([1,-1,1])(ports)
+        boat = boat - ports - flipped_ports
 
-    bailed_boat = with_can_holes - ports - flipped_ports
+        boat = scale([1.0/100.0,1.0/100.0,1.0/100.0])(boat)
 
-    # final_boat = bailed_boat
-    final_boat = scale([1.0/100.0,1.0/100.0,1.0/100.0])(bailed_boat)
+        print scad_render(boat)
 
-    print scad_render(final_boat)
+        with open("scad/tmp.scad","w") as tmp_scad:
+            tmp_scad.write(scad_render(boat))
 
-    with open("scad/tmp.scad","w") as tmp_scad:
-        tmp_scad.write(scad_render(final_boat))
-
-    subprocess.call(["openscad", "-o", "tmp.stl", "scad/tmp.scad"], cwd=os.getcwd())
+        subprocess.call(["openscad", "-o", "tmp.stl", "scad/tmp.scad"], cwd=os.getcwd())

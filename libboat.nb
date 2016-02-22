@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     75620,       1842]
-NotebookOptionsPosition[     75339,       1828]
-NotebookOutlinePosition[     75679,       1843]
-CellTagsIndexPosition[     75636,       1840]
+NotebookDataLength[     76009,       1850]
+NotebookOptionsPosition[     75727,       1836]
+NotebookOutlinePosition[     76067,       1851]
+CellTagsIndexPosition[     76024,       1848]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -122,7 +122,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
     RowBox[{"findAllRoots", ",", "HoldAll"}], "]"}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -137,7 +137,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"Options", "[", "Plot", "]"}], ",", 
         RowBox[{"Except", "[", "PlotRange", "]"}]}], "]"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"findAllRoots", "[", 
@@ -298,11 +298,11 @@ Cell[BoxData[{
    "End", " ", "Notebook", " ", "to", " ", "Package", " ", "conversion", " ", 
     "code"}], " ", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
-   RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", "*)"}], 
-  "\[IndentingNewLine]", 
+   RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", "*)"}], "\n", 
   RowBox[{"(*", 
    RowBox[{
-    RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], "*)"}]}], "\n", 
+    RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
@@ -528,13 +528,13 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{
     RowBox[{"exportBoat", "[", 
-     RowBox[{"boat_", ",", "filename_"}], "]"}], ":=", "\[IndentingNewLine]", 
-    
+     RowBox[{"boat_", ",", "stlLocation_", ",", "filename_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
     RowBox[{"Module", "[", 
      RowBox[{
       RowBox[{"{", 
-       RowBox[{"boatFiltered", ",", "waterLineAssoc"}], "}"}], ",", 
-      "\[IndentingNewLine]", 
+       RowBox[{"boatFiltered", ",", "waterLineAssoc", ",", "stlAssoc"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"boatFiltered", "=", 
         RowBox[{"KeyTake", "[", 
@@ -551,12 +551,19 @@ Cell[BoxData[{
             RowBox[{"boat", ",", 
              RowBox[{"{", 
               RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "]"}]}]}], "|>"}]}],
-        ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"stlAssoc", "=", 
+        RowBox[{"<|", 
+         RowBox[{
+          RowBox[{"\"\<name\>\"", "\[Rule]", "\"\<STL\>\""}], ",", 
+          RowBox[{"\"\<location\>\"", "\[Rule]", "stlLocation"}]}], "|>"}]}], 
+       ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"boatFiltered", "=", 
         RowBox[{"Join", "[", 
          RowBox[{"boatFiltered", ",", 
-          RowBox[{"{", "waterLineAssoc", "}"}]}], "]"}]}], ";", 
-       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"waterLineAssoc", ",", "stlAssoc"}], "}"}]}], "]"}]}], ";",
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"(*", " ", 
         RowBox[{
          RowBox[{
@@ -1821,7 +1828,8 @@ Cell[BoxData[{
    3.665174295289064*^9, 3.665174315240859*^9}, {3.665174861389271*^9, 
    3.665174889147438*^9}, {3.665175126416152*^9, 3.665175158451404*^9}, {
    3.6651752840889397`*^9, 3.66517529474656*^9}, {3.665175798189698*^9, 
-   3.665175894787457*^9}, {3.6651759273432503`*^9, 3.665176015058539*^9}}],
+   3.665175894787457*^9}, {3.6651759273432503`*^9, 3.6651603554513683`*^9}, {
+   3.665161063122476*^9, 3.665161063658578*^9}}],
 
 Cell[BoxData[""], "Input",
  CellChangeTimes->{{3.6651739953052692`*^9, 3.665174000338977*^9}}]
@@ -1842,8 +1850,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 74680, 1803, 9468, "Input"],
-Cell[75241, 1825, 94, 1, 46, "Input"]
+Cell[558, 20, 75068, 1811, 10702, "Input"],
+Cell[75629, 1833, 94, 1, 35, "Input"]
 }
 ]
 *)

@@ -134,14 +134,15 @@ regionBounds[boat_] :=
    RegionBounds[hull]
    ];
 
-exportBoat[boat_, filename_] :=
+exportBoat[boat_, stlLocation_, filename_] :=
   
-  Module[{boatFiltered, waterLineAssoc},
+  Module[{boatFiltered, waterLineAssoc, stlAssoc},
    boatFiltered = KeyTake[boat, {name, type, com}];
    waterLineAssoc = <|"name" -> "Water", 
      "waterline" -> calculateWaterLine[boat, {0, 0, 1}]|>;
+   stlAssoc = <|"name" -> "STL", "location" -> stlLocation|>;
    
-   boatFiltered = Join[boatFiltered, {waterLineAssoc}];
+   boatFiltered = Join[boatFiltered, {waterLineAssoc, stlAssoc}];
    
    (* Wow this is ....ed up *)
    
