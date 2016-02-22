@@ -59,7 +59,7 @@ if __name__ == '__main__':
         ports = [bailing_ports(c['com'], water) for c in cans]
         flipped_ports = scale([1,-1,1])(ports)
 
-        boat = boat - ports - flipped_ports
+        # boat = boat - ports - flipped_ports
 
         boat = scale([1.0/100.0,1.0/100.0,1.0/100.0])(boat)
 
