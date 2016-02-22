@@ -8,8 +8,8 @@ import os
 
 os.path.dirname(os.path.realpath(__file__))
 
-can_height = 12.3
-can_radius = 3.2
+can_height = 12.3 + 0.5
+can_radius = 3.2 + 0.1
 
 def can():
     return rotate([0, 90, 0])(
@@ -29,7 +29,7 @@ def bailing_ports(t, water_height):
     port_length = 100
     port_radius = 1
 
-    port = rotate([100, 0, 0])(
+    port = rotate([120, 0, 0])(
         cylinder(h=port_length,r=port_radius)
     )
 
@@ -38,7 +38,7 @@ def bailing_ports(t, water_height):
     )
 
 boat = scale(100)(
-    import_stl("/home/wolf/qea/hulls/boats/anotherlemonboat.stl")
+    import_stl("/home/wolf/qea/hulls/boats/experimentallemon.stl")
 )
 
 with open("boat.json","r") as f:
