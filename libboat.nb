@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     63518,       1550]
-NotebookOptionsPosition[     63276,       1537]
-NotebookOutlinePosition[     63616,       1552]
-CellTagsIndexPosition[     63573,       1549]
+NotebookDataLength[     64772,       1579]
+NotebookOptionsPosition[     64530,       1566]
+NotebookOutlinePosition[     64870,       1581]
+CellTagsIndexPosition[     64827,       1578]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -122,7 +122,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
     RowBox[{"findAllRoots", ",", "HoldAll"}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -137,7 +137,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"Options", "[", "Plot", "]"}], ",", 
         RowBox[{"Except", "[", "PlotRange", "]"}]}], "]"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"findAllRoots", "[", 
@@ -363,6 +363,30 @@ Cell[BoxData[{
           RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
        RowBox[{"RegionBounds", "[", "hull", "]"}]}]}], "\[IndentingNewLine]", 
      "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"exportBoat", "[", 
+     RowBox[{"boat_", ",", "filename_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "boatFiltered", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"boatFiltered", "=", 
+        RowBox[{"<|", 
+         RowBox[{"Boat", "\[Rule]", 
+          RowBox[{"KeyTake", "[", 
+           RowBox[{"boat", ",", 
+            RowBox[{"{", 
+             RowBox[{"name", ",", "type"}], "}"}]}], "]"}]}], "|>"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", "boatFiltered", "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{"filename", ",", "boatFiltered"}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"ClearAll", "[", "waterLineOld", "]"}], ";"}], 
@@ -1533,7 +1557,12 @@ Cell[BoxData[{
    3.6650765621268177`*^9, 3.665076562870751*^9}, 3.665076969701899*^9, 
    3.665077064977026*^9, 3.665077175500764*^9, {3.6650772057605953`*^9, 
    3.665077207256618*^9}, 3.665077727654277*^9, {3.665078520025464*^9, 
-   3.665078542453808*^9}}]
+   3.665078542453808*^9}, {3.665125199595546*^9, 3.665125213562155*^9}, {
+   3.665125252521677*^9, 3.665125332637659*^9}, {3.665125414243432*^9, 
+   3.665125423804598*^9}, {3.6651254777683783`*^9, 3.6651255015409813`*^9}, {
+   3.665125585870491*^9, 3.665125590979575*^9}, {3.6651256441009817`*^9, 
+   3.665125865478548*^9}, {3.6651258987299967`*^9, 3.665125932899448*^9}, {
+   3.6651260560409727`*^9, 3.665126072322048*^9}}]
 },
 WindowSize->{960, 1016},
 WindowMargins->{{Automatic, -10}, {Automatic, -8}},
@@ -1551,7 +1580,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 62714, 1515, 9202, "Input"]
+Cell[558, 20, 63968, 1544, 9377, "Input"]
 }
 ]
 *)
