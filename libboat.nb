@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     63171,       1547]
-NotebookOptionsPosition[     62929,       1534]
-NotebookOutlinePosition[     63269,       1549]
-CellTagsIndexPosition[     63226,       1546]
+NotebookDataLength[     63518,       1550]
+NotebookOptionsPosition[     63276,       1537]
+NotebookOutlinePosition[     63616,       1552]
+CellTagsIndexPosition[     63573,       1549]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -335,23 +335,34 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"regionBounds", "[", "boat_", "]"}], ":=", "\[IndentingNewLine]", 
-   RowBox[{"Module", "[", 
-    RowBox[{
-     RowBox[{"{", "hull", "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"ballastLocationFinder", "[", 
+    RowBox[{"comHull_", ",", "deltaHeight_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"comHull", "+", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "0", ",", "deltaHeight"}], "}"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"regionBounds", "[", "boat_", "]"}], ":=", "\[IndentingNewLine]", 
+    
+    RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"hull", "=", 
-       RowBox[{"region", "/.", 
-        RowBox[{
-         RowBox[{"Select", "[", 
-          RowBox[{"boat", ",", 
-           RowBox[{
+      RowBox[{"{", "hull", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"hull", "=", 
+        RowBox[{"region", "/.", 
+         RowBox[{
+          RowBox[{"Select", "[", 
+           RowBox[{"boat", ",", 
             RowBox[{
-             RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Buoy\>\""}], 
-            "&"}]}], "]"}], "[", 
-         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
-      RowBox[{"RegionBounds", "[", "hull", "]"}]}]}], "\[IndentingNewLine]", 
-    "]"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"#", "[", "type", "]"}], "\[Equal]", "\"\<Buoy\>\""}], 
+             "&"}]}], "]"}], "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"RegionBounds", "[", "hull", "]"}]}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"ClearAll", "[", "waterLineOld", "]"}], ";"}], 
@@ -841,6 +852,18 @@ Cell[BoxData[{
        RowBox[{"Sin", "[", "#", "]"}]}], "+", "\[IndentingNewLine]", 
       RowBox[{"up", "*", 
        RowBox[{"Cos", "[", "#", "]"}]}]}], "&"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"avsDefaults", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"UpVec", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], ",", 
+      RowBox[{"FrontVec", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "0", ",", "0"}], "}"}]}]}], "}"}]}], ";"}], 
   "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
@@ -850,15 +873,7 @@ Cell[BoxData[{
   RowBox[{"ClearAll", "[", "rightingArm", "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"Options", "[", "rightingArm", "]"}], "=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"UpVec", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], ",", 
-     RowBox[{"FrontVec", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"1", ",", "0", ",", "0"}], "}"}]}]}], "}"}]}], 
+   RowBox[{"Options", "[", "rightingArm", "]"}], "=", "avsDefaults"}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -917,7 +932,7 @@ Cell[BoxData[{
         RowBox[{"r", "=", 
          RowBox[{"cob", "-", "com"}]}], ";", "\[IndentingNewLine]", 
         RowBox[{"r", ".", "left"}]}]}], "\[IndentingNewLine]", "]"}]}]}], 
-   ";"}], "\[IndentingNewLine]", 
+   ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
     RowBox[{"Calculate", " ", "the", " ", "AVS", " ", "function"}], ",", " ", 
@@ -930,15 +945,7 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"Options", "[", "calculateAVS", "]"}], "=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"UpVec", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], ",", 
-     RowBox[{"FrontVec", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"1", ",", "0", ",", "0"}], "}"}]}]}], "}"}]}], 
+   RowBox[{"Options", "[", "calculateAVS", "]"}], "=", "avsDefaults"}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1022,6 +1029,10 @@ Cell[BoxData[{
    "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
+   RowBox[{"Options", "[", "plotCircleAVS", "]"}], "=", "avsDefaults"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{
     RowBox[{"plotCircleAVS", "[", 
      RowBox[{"boat_", ",", "samplePoints_", ",", 
@@ -1034,6 +1045,10 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"-", "Pi"}], ",", "Pi"}], "}"}], ",", "opts"}], "]"}]}], 
    ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "plotAVS", "]"}], "=", "avsDefaults"}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1106,19 +1121,14 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"Options", "[", "manyBoats", "]"}], "=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"UpVec", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], ",", 
-     RowBox[{"FrontVec", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"1", ",", "0", ",", "0"}], "}"}]}], ",", 
-     RowBox[{"ViewPoint", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"-", "\[Infinity]"}], ",", "0", ",", "0"}], "}"}]}]}], 
-    "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Join", "[", 
+    RowBox[{"avsDefaults", ",", 
+     RowBox[{"{", 
+      RowBox[{"ViewPoint", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "\[Infinity]"}], ",", "0", ",", "0"}], "}"}]}], "}"}]}],
+     "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1341,7 +1351,10 @@ Cell[BoxData[{
          RowBox[{"getAVSPoints", "[", "\[IndentingNewLine]", 
           RowBox[{
            RowBox[{"calculateAVS", "[", 
-            RowBox[{"boat", ",", "20", ",", "range"}], "]"}], ",", 
+            RowBox[{"boat", ",", "20", ",", "range", ",", 
+             RowBox[{"FrontVec", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "0", ",", "0"}], "}"}]}]}], "]"}], ",", 
            "\[IndentingNewLine]", "range"}], "]"}], "/", "Degree"}]}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"avsPointsDisp", "=", 
@@ -1375,76 +1388,56 @@ Cell[BoxData[{
                "\[Theta]", "]"}], "]"}], ",", "\[IndentingNewLine]", 
              RowBox[{"{", 
               RowBox[{"\[Theta]", ",", "0"}], "}"}]}], "]"}]}], ")"}], "/", 
-         "Degree"}]}], ";", "\[IndentingNewLine]", 
-       RowBox[{"(*", 
+         "Degree"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"Grid", "[", 
         RowBox[{
-         RowBox[{
-          RowBox[{"getAVSPoints", "[", "\[IndentingNewLine]", 
-           RowBox[{
-            RowBox[{"calculateAVS", "[", 
-             RowBox[{"boat", ",", "20", ",", "range", ",", 
-              RowBox[{"FrontVec", "\[Rule]", 
-               RowBox[{"{", 
-                RowBox[{"0", ",", "1", ",", "0"}], "}"}]}]}], "]"}], ",", 
-            "\[IndentingNewLine]", "range"}], "]"}], "/", "Degree"}], ";", 
-         "\[IndentingNewLine]", 
-         RowBox[{"avsTrimPointsDisp", "=", 
-          RowBox[{"Grid", "[", 
-           RowBox[{"{", 
-            RowBox[{"Table", "[", 
-             RowBox[{
-              RowBox[{"d", 
-               
-               TemplateBox[{
-                InterpretationBox["\[InvisibleSpace]", 1],
-                 RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}],"degrees",
-                 "\"AngularDegrees\""},
-                "QuantityPostfix"]}], ",", 
-              RowBox[{"{", 
-               RowBox[{"d", ",", "avsTrimPoints"}], "}"}]}], "]"}], 
-            "}"}]}]}]}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
-       RowBox[{"trimAVS", "=", 
-        RowBox[{"get", "\[IndentingNewLine]", 
-         RowBox[{"Grid", "[", 
+         RowBox[{"{", "\[IndentingNewLine]", 
           RowBox[{
-           RowBox[{"{", "\[IndentingNewLine]", 
-            RowBox[{
-             RowBox[{"{", 
-              RowBox[{"\"\<Boat\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Boat\>\"", ",", 
+             RowBox[{"Show", "[", 
+              RowBox[{
                RowBox[{"renderBoat", "[", 
-                RowBox[{"boat", ",", "up"}], "]"}]}], "}"}], ",", 
-             "\[IndentingNewLine]", 
-             RowBox[{"{", 
-              RowBox[{"\"\<AVS Plot\>\"", ",", 
+                RowBox[{"boat", ",", "up"}], "]"}], ",", 
+               RowBox[{"ImageSize", "\[Rule]", "Medium"}]}], "]"}]}], "}"}], 
+           ",", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<AVS Plot\>\"", ",", 
+             RowBox[{"Show", "[", 
+              RowBox[{
                RowBox[{"plotAVS", "[", 
-                RowBox[{"boat", ",", "20", ",", "range"}], "]"}]}], "}"}], 
-             ",", "\[IndentingNewLine]", 
-             RowBox[{"{", 
-              RowBox[{"\"\<AVS Zeros\>\"", ",", "avsPointsDisp"}], "}"}], ",",
-              "\[IndentingNewLine]", 
-             RowBox[{"{", 
-              RowBox[{"\"\<Trim AVS\>\"", ",", 
+                RowBox[{"boat", ",", "20", ",", "range"}], "]"}], ",", 
+               RowBox[{"ImageSize", "\[Rule]", "Medium"}]}], "]"}]}], "}"}], 
+           ",", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<AVS Zeros\>\"", ",", "avsPointsDisp"}], "}"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Trim AVS\>\"", ",", 
+             RowBox[{"Show", "[", 
+              RowBox[{
                RowBox[{"plotAVS", "[", 
                 RowBox[{"boat", ",", "20", ",", "range", ",", 
                  RowBox[{"FrontVec", "\[Rule]", 
                   RowBox[{"{", 
-                   RowBox[{"0", ",", "1", ",", "0"}], "}"}]}]}], "]"}]}], 
-              "}"}], ",", "\[IndentingNewLine]", 
-             RowBox[{"{", 
-              RowBox[{"\"\<Trim\>\"", ",", 
-               RowBox[{"avsTrim", 
-                
-                TemplateBox[{
-                 InterpretationBox["\[InvisibleSpace]", 1],
-                  RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}],"degrees",
-                  "\"AngularDegrees\""},
-                 "QuantityPostfix"]}]}], "}"}]}], "\[IndentingNewLine]", 
-            "}"}], ",", 
-           RowBox[{"Frame", "\[Rule]", "All"}]}], "]"}]}]}]}]}], 
+                   RowBox[{"0", ",", "1", ",", "0"}], "}"}]}]}], "]"}], ",", 
+               RowBox[{"ImageSize", "\[Rule]", "Medium"}]}], "]"}]}], "}"}], 
+           ",", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<Trim\>\"", ",", 
+             RowBox[{"avsTrim", 
+              
+              TemplateBox[{
+               InterpretationBox["\[InvisibleSpace]", 1],
+                RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}],"degrees",
+                "\"AngularDegrees\""},
+               "QuantityPostfix"]}]}], "}"}]}], "\[IndentingNewLine]", "}"}], 
+         ",", 
+         RowBox[{"Frame", "\[Rule]", "All"}]}], "]"}]}]}], 
      "\[IndentingNewLine]", "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
  CellChangeTimes->{{3.664813299496937*^9, 3.6648133170510674`*^9}, {
    3.66481350271585*^9, 3.664813508043021*^9}, {3.664814672840811*^9, 
    3.6648146739448757`*^9}, {3.664814711701421*^9, 3.664814734598516*^9}, {
@@ -1530,7 +1523,17 @@ Cell[BoxData[{
    3.665073476312708*^9, 3.665073491183202*^9}, {3.665074018410283*^9, 
    3.6650740353714037`*^9}, {3.665074084856187*^9, 3.6650741257104607`*^9}, {
    3.6650741789884987`*^9, 3.665074196809621*^9}, {3.6650746936470337`*^9, 
-   3.665074922080101*^9}, {3.665074955800531*^9, 3.665075114102572*^9}}]
+   3.665074922080101*^9}, {3.665074955800531*^9, 3.665075114102572*^9}, {
+   3.665075539100403*^9, 3.665075542633052*^9}, {3.665075650058984*^9, 
+   3.6650756599797087`*^9}, {3.665075696771199*^9, 3.665075698338806*^9}, {
+   3.6650758174845*^9, 3.665075818638989*^9}, {3.665075850640841*^9, 
+   3.665075859552603*^9}, {3.665075911253875*^9, 3.665075990176453*^9}, {
+   3.665076033901205*^9, 3.665076035131044*^9}, {3.665076073344365*^9, 
+   3.665076087093484*^9}, {3.665076231094141*^9, 3.665076438506474*^9}, {
+   3.6650765621268177`*^9, 3.665076562870751*^9}, 3.665076969701899*^9, 
+   3.665077064977026*^9, 3.665077175500764*^9, {3.6650772057605953`*^9, 
+   3.665077207256618*^9}, 3.665077727654277*^9, {3.665078520025464*^9, 
+   3.665078542453808*^9}}]
 },
 WindowSize->{960, 1016},
 WindowMargins->{{Automatic, -10}, {Automatic, -8}},
@@ -1548,7 +1551,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 62367, 1512, 9162, "Input"]
+Cell[558, 20, 62714, 1515, 9202, "Input"]
 }
 ]
 *)
