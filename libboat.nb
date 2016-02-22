@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     64772,       1579]
-NotebookOptionsPosition[     64530,       1566]
-NotebookOutlinePosition[     64870,       1581]
-CellTagsIndexPosition[     64827,       1578]
+NotebookDataLength[     66411,       1617]
+NotebookOptionsPosition[     66169,       1604]
+NotebookOutlinePosition[     66509,       1619]
+CellTagsIndexPosition[     66466,       1616]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -374,19 +374,52 @@ Cell[BoxData[{
       RowBox[{"{", "boatFiltered", "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"boatFiltered", "=", 
-        RowBox[{"<|", 
-         RowBox[{"Boat", "\[Rule]", 
-          RowBox[{"KeyTake", "[", 
-           RowBox[{"boat", ",", 
-            RowBox[{"{", 
-             RowBox[{"name", ",", "type"}], "}"}]}], "]"}]}], "|>"}]}], ";", 
+        RowBox[{"KeyTake", "[", 
+         RowBox[{"boat", ",", 
+          RowBox[{"{", 
+           RowBox[{"name", ",", "type", ",", "com"}], "}"}]}], "]"}]}], ";", 
        "\[IndentingNewLine]", 
-       RowBox[{"Print", "[", "boatFiltered", "]"}], ";", 
-       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Wow", " ", "this", " ", "is"}], " ", "..."}], ".", "ed"}],
+          " ", "up"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"boatFiltered", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"<|", 
+           RowBox[{"KeyValueMap", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", "\[Rule]", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"QuantityQ", "[", "#2", "]"}], "||", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#2", "]"}], ">", "1"}], "&&", 
+                    RowBox[{"QuantityQ", "[", 
+                    RowBox[{"#2", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ")"}]}], ",", 
+                 RowBox[{"QuantityMagnitude", "[", "#2", "]"}], ",", "#2"}], 
+                "]"}]}], "&"}], ",", "#"}], "]"}], "|>"}], "&"}], "/@", 
+         "boatFiltered"}]}], ";", "\[IndentingNewLine]", 
        RowBox[{"Export", "[", 
-        RowBox[{"filename", ",", "boatFiltered"}], "]"}]}]}], 
-     "\[IndentingNewLine]", "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+        RowBox[{"filename", ",", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"<|", 
+            RowBox[{"KeyValueMap", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"ToString", "[", "#1", "]"}], "\[Rule]", "#2"}], 
+               "&"}], ",", "#"}], "]"}], "|>"}], "&"}], "/@", 
+          "boatFiltered"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"ClearAll", "[", "waterLineOld", "]"}], ";"}], 
@@ -1562,7 +1595,12 @@ Cell[BoxData[{
    3.665125423804598*^9}, {3.6651254777683783`*^9, 3.6651255015409813`*^9}, {
    3.665125585870491*^9, 3.665125590979575*^9}, {3.6651256441009817`*^9, 
    3.665125865478548*^9}, {3.6651258987299967`*^9, 3.665125932899448*^9}, {
-   3.6651260560409727`*^9, 3.665126072322048*^9}}]
+   3.6651260560409727`*^9, 3.665126072322048*^9}, {3.665128226576803*^9, 
+   3.66512823618428*^9}, {3.6651283004195967`*^9, 3.6651283113142757`*^9}, {
+   3.665128357060206*^9, 3.665128436275737*^9}, {3.6651284881974983`*^9, 
+   3.665128619859158*^9}, {3.665128653755067*^9, 3.6651286808892527`*^9}, {
+   3.665128713904972*^9, 3.665128732086623*^9}, {3.665128798725216*^9, 
+   3.6651288769935083`*^9}}]
 },
 WindowSize->{960, 1016},
 WindowMargins->{{Automatic, -10}, {Automatic, -8}},
@@ -1580,7 +1618,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 63968, 1544, 9377, "Input"]
+Cell[558, 20, 65607, 1582, 9477, "Input"]
 }
 ]
 *)
