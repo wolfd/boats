@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     67315,       1637]
-NotebookOptionsPosition[     67073,       1624]
-NotebookOutlinePosition[     67413,       1639]
-CellTagsIndexPosition[     67370,       1636]
+NotebookDataLength[     75620,       1842]
+NotebookOptionsPosition[     75339,       1828]
+NotebookOutlinePosition[     75679,       1843]
+CellTagsIndexPosition[     75636,       1840]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -137,7 +137,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"Options", "[", "Plot", "]"}], ",", 
         RowBox[{"Except", "[", "PlotRange", "]"}]}], "]"}]}], "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"findAllRoots", "[", 
@@ -251,15 +251,61 @@ Cell[BoxData[{
         RowBox[{"{", "}"}]}]}]}]}], "]"}]}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
+   RowBox[{
+   "Begin", " ", "Notebook", " ", "to", " ", "Package", " ", "conversion", 
+    " ", "code"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"convert", "[", 
+    RowBox[{"notebook_", ",", "package_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"nb", ",", "str"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"nb", "=", 
+       RowBox[{"NotebookOpen", "[", "notebook", 
+        RowBox[{"(*", 
+         RowBox[{",", 
+          RowBox[{"Visible", "\[Rule]", "False"}]}], "*)"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"SelectionMove", "[", 
+       RowBox[{"nb", ",", "All", ",", "Notebook"}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"str", "=", 
+       RowBox[{"First", "[", 
+        RowBox[{"FrontEndExecute", "[", 
+         RowBox[{"FrontEnd`ExportPacket", "[", 
+          RowBox[{
+           RowBox[{"NotebookSelection", "[", "nb", "]"}], ",", 
+           "\"\<InputText\>\""}], "]"}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"NotebookClose", "[", "nb", "]"}], ";"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"Export", "[", 
+       RowBox[{"\"\<text.txt\>\"", ",", "str"}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Quiet", "[", 
+       RowBox[{"DeleteFile", "[", "package", "]"}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"RenameFile", "[", 
+       RowBox[{"\"\<text.txt\>\"", ",", "package"}], "]"}], ";"}]}], "]"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "End", " ", "Notebook", " ", "to", " ", "Package", " ", "conversion", " ", 
+    "code"}], " ", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
    RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", "*)"}], 
   "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
-    RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
-   "*)"}]}], "\[IndentingNewLine]", 
+    RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], "*)"}]}], "\n", 
  RowBox[{
   RowBox[{
-   RowBox[{"ParallelNeeds", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
+   RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
   "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
@@ -276,6 +322,23 @@ Cell[BoxData[{
      RowBox[{"reg", ",", "numPoints"}], "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
+  RowBox[{
+   RowBox[{"sortCompiled", "=", 
+    RowBox[{"Compile", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"pts", ",", "_Real", ",", "2"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"normal", ",", "_Real", ",", "1"}], "}"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Sort", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", ".", "normal"}], "&"}], "/@", "pts"}], "]"}]}], "]"}]}],
+    ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
   RowBox[{"ClearAll", "[", "sortPoints", "]"}], ";"}], "\[IndentingNewLine]", 
 
  RowBox[{
@@ -286,18 +349,116 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"sortPoints", "[", 
       RowBox[{"pts", ",", "normal"}], "]"}], "=", "\[IndentingNewLine]", 
-     RowBox[{"If", "[", 
-      RowBox[{"False", ",", "\[IndentingNewLine]", 
-       RowBox[{"CUDASort", "[", 
-        RowBox[{"CUDADot", "[", 
-         RowBox[{"pts", ",", "normal"}], "]"}], "]"}], ",", 
-       "\[IndentingNewLine]", 
-       RowBox[{"Sort", "[", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"#", ".", "normal"}], "&"}], "/@", "pts"}], "]"}]}], 
-      "\[IndentingNewLine]", "]"}]}]}], ";"}], 
+     RowBox[{"sortCompiled", "[", 
+      RowBox[{"pts", ",", "normal"}], "]"}]}]}], ";"}], "\[IndentingNewLine]",
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"So", " ", "many", " ", "implementations"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "csortPoints", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"csortPoints", "[", 
+     RowBox[{"pts_", ",", "normal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"CUDASort", "[", 
+     RowBox[{"CUDADot", "[", 
+      RowBox[{"pts", ",", 
+       RowBox[{"N", "[", "normal", "]"}]}], "]"}], "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "msortPoints", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"msortPoints", "[", 
+     RowBox[{"pts_", ",", "normal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Sort", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", ".", "normal"}], "&"}], "/@", "pts"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"compiledsortPoints", "[", 
+     RowBox[{"pts_", ",", "normal_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"sortCompiled", "[", 
+     RowBox[{"pts", ",", "normal"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Test", " ", "the", " ", 
+    RowBox[{"implementations", "'"}], " ", "speeds"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"stressTest", "[", 
+     RowBox[{"pts_", ",", "times_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "normal", ",", "cudaTiming", ",", "cpuTiming", ",", "compiled"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"normal", "=", 
+        RowBox[{"Normalize", "[", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"Sin", "[", "x", "]"}], ",", 
+           RowBox[{"Cos", "[", "x", "]"}]}], "}"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"cudaTiming", "=", 
+        RowBox[{
+         RowBox[{"Timing", "[", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"csortPoints", "[", 
+             RowBox[{"pts", ",", "normal"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", 
+              RowBox[{"Range", "[", "times", "]"}]}], "}"}]}], "]"}], "]"}], 
+         "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"cpuTiming", "=", 
+        RowBox[{
+         RowBox[{"Timing", "[", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"msortPoints", "[", 
+             RowBox[{"pts", ",", "normal"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", 
+              RowBox[{"Range", "[", "times", "]"}]}], "}"}]}], "]"}], "]"}], 
+         "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"compiled", "=", 
+        RowBox[{
+         RowBox[{"Timing", "[", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"compiledsortPoints", "[", 
+             RowBox[{"pts", ",", "normal"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", 
+              RowBox[{"Range", "[", "times", "]"}]}], "}"}]}], "]"}], "]"}], 
+         "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Grid", "[", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\"\<cuda\>\"", ",", "cudaTiming"}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"\"\<cpu\>\"", ",", "cpuTiming"}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"\"\<compiled\>\"", ",", "compiled"}], "}"}]}], 
+         "\[IndentingNewLine]", "}"}], "]"}]}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -700,7 +861,28 @@ Cell[BoxData[{
           "\[IndentingNewLine]", 
           RowBox[{"bf", "\[Rule]", "buoyancyForce"}]}], "\[IndentingNewLine]",
           "|>"}]}]}], "\[IndentingNewLine]", "]"}]}]}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"compiledBelowWaterLine", "=", 
+    RowBox[{"Compile", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"pts", ",", "_Real", ",", "2"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"wNormal", ",", "_Real", ",", "1"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"waterHeight", ",", "_Real"}], "}"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Select", "[", 
+       RowBox[{"pts", ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", ".", "wNormal"}], "<=", "waterHeight"}], "&"}]}], 
+       "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  
   RowBox[{"(*", " ", 
    RowBox[{
    "Find", " ", "the", " ", "points", " ", "of", " ", "the", " ", "buoyHull", 
@@ -744,15 +926,11 @@ Cell[BoxData[{
           "get", " ", "all", " ", "points", " ", "that", " ", "are", " ", 
            "below", " ", "the", " ", "water", " ", "height"}]}], " ", "*)"}], 
         "\[IndentingNewLine]", 
-        RowBox[{"pointsBelowWater", "=", 
-         RowBox[{"Select", "[", 
-          RowBox[{
-           RowBox[{"points", "/.", "buoy"}], ",", 
-           RowBox[{
-            RowBox[{
-             RowBox[{"#", ".", "wNormal"}], "<=", "waterHeight"}], "&"}]}], 
-          "]"}]}]}]}], "\[IndentingNewLine]", "]"}]}]}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"compiledBelowWaterLine", "[", 
+         RowBox[{
+          RowBox[{"points", "/.", "buoy"}], ",", "wNormal", ",", 
+          "waterHeight"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}]}], ";"}],
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
    "Find", " ", "the", " ", "total", " ", "COM", " ", "for", " ", "the", " ", 
@@ -1512,6 +1690,10 @@ Cell[BoxData[{
      "\[IndentingNewLine]", "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
+  RowBox[{"convert", "[", 
+   RowBox[{"\"\<libboat.nb\>\"", ",", "\"\<libboat.m\>\""}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
  CellChangeTimes->{{3.664813299496937*^9, 3.6648133170510674`*^9}, {
    3.66481350271585*^9, 3.664813508043021*^9}, {3.664814672840811*^9, 
@@ -1620,7 +1802,29 @@ Cell[BoxData[{
    3.665128713904972*^9, 3.665128732086623*^9}, {3.665128798725216*^9, 
    3.6651288769935083`*^9}, {3.665130693935008*^9, 3.6651308379226217`*^9}, {
    3.665130871883218*^9, 3.665130876808619*^9}, {3.6651309169043913`*^9, 
-   3.6651309679305487`*^9}}]
+   3.6651309679305487`*^9}, {3.665158099590288*^9, 3.6651581017817583`*^9}, {
+   3.665158318972909*^9, 3.665158347722719*^9}, {3.6651584507944202`*^9, 
+   3.665158497099456*^9}, {3.665158535787163*^9, 3.665158722070166*^9}, {
+   3.665158814500757*^9, 3.66515886814471*^9}, {3.665158980173955*^9, 
+   3.665159012224972*^9}, {3.665159066639955*^9, 3.665159123688993*^9}, {
+   3.665159156264868*^9, 3.665159211673376*^9}, {3.665159294478356*^9, 
+   3.665159299765954*^9}, {3.665159443412805*^9, 3.665159531414968*^9}, {
+   3.665159657926793*^9, 3.665159658127082*^9}, {3.665159695364471*^9, 
+   3.6651597477536488`*^9}, {3.665159782294951*^9, 3.665159801717558*^9}, {
+   3.665171886866912*^9, 3.665171889195488*^9}, {3.6651719812637978`*^9, 
+   3.665171990679481*^9}, {3.665172745074832*^9, 3.6651728265525007`*^9}, {
+   3.665172920317683*^9, 3.665172929334716*^9}, {3.665173410515273*^9, 
+   3.665173547089795*^9}, {3.6651736394883327`*^9, 3.6651736707392683`*^9}, 
+   3.6651737157717857`*^9, {3.665173888548195*^9, 3.665173959085434*^9}, {
+   3.665174002705652*^9, 3.66517404561369*^9}, {3.665174080751976*^9, 
+   3.665174088267787*^9}, {3.6651741536892147`*^9, 3.665174196471183*^9}, {
+   3.665174295289064*^9, 3.665174315240859*^9}, {3.665174861389271*^9, 
+   3.665174889147438*^9}, {3.665175126416152*^9, 3.665175158451404*^9}, {
+   3.6651752840889397`*^9, 3.66517529474656*^9}, {3.665175798189698*^9, 
+   3.665175894787457*^9}, {3.6651759273432503`*^9, 3.665176015058539*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6651739953052692`*^9, 3.665174000338977*^9}}]
 },
 WindowSize->{960, 1016},
 WindowMargins->{{Automatic, -10}, {Automatic, -8}},
@@ -1638,7 +1842,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 66511, 1602, 9602, "Input"]
+Cell[558, 20, 74680, 1803, 9468, "Input"],
+Cell[75241, 1825, 94, 1, 46, "Input"]
 }
 ]
 *)
