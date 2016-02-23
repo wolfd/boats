@@ -17,17 +17,42 @@ module boat() {
 }
 
 module bboat() {
-    difference() { 
+    translate([0,5,-5.5]) difference() { 
         boat();
 //        mast();
     }
 }
 
-bboat();
+module cut(n) {
+    difference() {
+        translate([0, 0, n*2]) bboat();
+        scale([1,1,-1]) cube(100);
+        translate([0,0,2]) cube(100);
+    }
+}
 
-//for(i = [0:3]) {
-//    difference() {
-//        translate([0, i * 10, -i*2]) bboat();
-//        cube(100);
+//projection(cut=false) {
+//    translate([0,0,5]) {
+//        intersection() {
+//            cut(1);
+//            cube([30,5,2]);
+//        }
 //    }
 //}
+
+translate([0,0,5]) {
+    intersection() {
+        cut(1);
+        cube([30,5,2]);
+    }
+};
+
+difference() {
+    
+//    for(i = [0:3]) {
+//        translate([0, i * 10, i*2]) bboat();
+//    }
+//    scale([1,1,-1]) cube(100);
+//    translate([0,0,2]) cube(100);
+}
+
