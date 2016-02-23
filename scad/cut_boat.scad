@@ -48,13 +48,15 @@ module cut(n) {
 //};
 
 difference() {
-    
-    for(i = [0:3]) {
+    union() {
+    for(i = [0:2]) {
         if(i>0) {
-            translate([25,0,2]) rotate([0,180,0]) translate([0, i * 10, i*2]) bboat();
+            translate([25,0,2]) rotate([0,180,0]) translate([0, i * 9.4, i*2]) bboat();
         } else {
             translate([0, i * 10, i*2]) bboat();
         }
+    }
+    translate([25,0,2]) rotate([0,180,0]) translate([0, 3 * 9, 3*2]) bboat();
     }
     scale([1,1,-1]) cube(100);
     translate([0,0,2]) cube(100);
