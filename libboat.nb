@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     76009,       1850]
-NotebookOptionsPosition[     75727,       1836]
-NotebookOutlinePosition[     76067,       1851]
-CellTagsIndexPosition[     76024,       1848]
+NotebookDataLength[     76049,       1851]
+NotebookOptionsPosition[     75767,       1837]
+NotebookOutlinePosition[     76107,       1852]
+CellTagsIndexPosition[     76064,       1849]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -122,7 +122,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
     RowBox[{"findAllRoots", ",", "HoldAll"}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -137,7 +137,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"Options", "[", "Plot", "]"}], ",", 
         RowBox[{"Except", "[", "PlotRange", "]"}]}], "]"}]}], "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"findAllRoots", "[", 
@@ -296,9 +296,10 @@ Cell[BoxData[{
   RowBox[{"(*", " ", 
    RowBox[{
    "End", " ", "Notebook", " ", "to", " ", "Package", " ", "conversion", " ", 
-    "code"}], " ", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "code"}], " ", "*)"}], "\[IndentingNewLine]", "\n", 
   RowBox[{"(*", " ", 
-   RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", "*)"}], "\n", 
+   RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
     RowBox[{"Needs", "[", "\"\<CUDALink`\>\"", "]"}], ";"}], 
@@ -1694,11 +1695,11 @@ Cell[BoxData[{
                "QuantityPostfix"]}]}], "}"}]}], "\[IndentingNewLine]", "}"}], 
          ",", 
          RowBox[{"Frame", "\[Rule]", "All"}]}], "]"}]}]}], 
-     "\[IndentingNewLine]", "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"convert", "[", 
-   RowBox[{"\"\<libboat.nb\>\"", ",", "\"\<libboat.m\>\""}], "]"}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"convert", "[", 
+    RowBox[{"\"\<libboat.nb\>\"", ",", "\"\<libboat.m\>\""}], "]"}], "*)"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
@@ -1829,7 +1830,7 @@ Cell[BoxData[{
    3.665174889147438*^9}, {3.665175126416152*^9, 3.665175158451404*^9}, {
    3.6651752840889397`*^9, 3.66517529474656*^9}, {3.665175798189698*^9, 
    3.665175894787457*^9}, {3.6651759273432503`*^9, 3.6651603554513683`*^9}, {
-   3.665161063122476*^9, 3.665161063658578*^9}}],
+   3.665161063122476*^9, 3.665161063658578*^9}, 3.665228449833336*^9}],
 
 Cell[BoxData[""], "Input",
  CellChangeTimes->{{3.6651739953052692`*^9, 3.665174000338977*^9}}]
@@ -1850,8 +1851,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 75068, 1811, 10702, "Input"],
-Cell[75629, 1833, 94, 1, 35, "Input"]
+Cell[558, 20, 75108, 1812, 10702, "Input"],
+Cell[75669, 1834, 94, 1, 35, "Input"]
 }
 ]
 *)
