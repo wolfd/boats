@@ -28,10 +28,10 @@ def can_and_hole(t):
 
 def bailing_ports(t, water_height):
     port_length = 100
-    port_side = 1
+    port_side = 1.0
 
     port = rotate([120, 0, 0])(
-        cube([port_side, port_side, port_length])
+        cylinder(h=port_length,r=port_side/2.0)
     )
 
     return translate([t[0], t[1], t[2] + can_radius + (port_side * 2)])(
@@ -59,13 +59,13 @@ if __name__ == '__main__':
         ports = [bailing_ports(c['com'], water) for c in cans]
         flipped_ports = scale([1,-1,1])(ports)
 
-        # boat = boat - ports - flipped_ports
+        boat = boat - ports - flipped_ports
 
         boat = scale([1.0/100.0,1.0/100.0,1.0/100.0])(boat)
 
-        print scad_render(boat)
+        print "$fa=2; $fs=0.1;\n"+scad_render(boat)
 
         with open("scad/tmp.scad","w") as tmp_scad:
-            tmp_scad.write(scad_render(boat))
+            tmp_scad.write("$fa=2; $fs=0.1;\n"+scad_render(boat))
 
         subprocess.call(["openscad", "-o", "tmp.stl", "scad/tmp.scad"], cwd=os.getcwd())
