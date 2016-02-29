@@ -396,6 +396,8 @@
 \newcommand{\khat}{\mathbf {\hat{k}}}
 \newcommand{\vect}{\mathbf}
 
+\allowdisplaybreaks
+
 
 \begin{document}
 %
@@ -554,11 +556,17 @@ In our design process, we identified the first three goals to be mainly computat
 In order for a boat to float above water its mass must be equal to the mass of water it displaces.
 If the total mass of the boat over the total volume of the boat is less than 
 
-\begin{align*}
+Assume the volume of a boat is determined by the generalized format, given some region $D$ that defines the boat.
+
+\begin{align}
+V_{boat} &= \iiint\limits_D \; dV
+\intertext{%
+what
+}
 M &= \iiint\limits_D \rho \; dV \\
 C_{mass} &= \frac{\iiint\limits_D (\ihat + \jhat + \khat) \rho_{boat} \; dV}{\iiint\limits_D \rho \; dV} \\
 C_{buoyancy} &= \frac{\iiint\limits_D (\ihat + \jhat + \khat) \rho_{water} \; dV}{\iiint\limits_D \rho \; dV}
-\end{align*}
+\end{align}
 
 
 
@@ -735,8 +743,8 @@ H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
 %\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
 % or if you just want to reserve a space for a photo:
 
-\begin{IEEEbiography}{Michael Shell}
-Biography text here.
+\begin{IEEEbiography}{Daniel Wolf}
+Pretty swell.
 \end{IEEEbiography}
 
 % if you will not have a photo at all:

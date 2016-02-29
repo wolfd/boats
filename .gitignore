@@ -2,3 +2,8 @@ boat.json
 scad/tmp.scad
 tmp.stl
 
+*.aux
+*.synctex.gz
+*.log
+
+
