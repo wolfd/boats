@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     76049,       1851]
-NotebookOptionsPosition[     75767,       1837]
-NotebookOutlinePosition[     76107,       1852]
-CellTagsIndexPosition[     76064,       1849]
+NotebookDataLength[     76222,       1854]
+NotebookOptionsPosition[     75940,       1840]
+NotebookOutlinePosition[     76280,       1855]
+CellTagsIndexPosition[     76237,       1852]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -122,7 +122,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"SetAttributes", "[", 
     RowBox[{"findAllRoots", ",", "HoldAll"}], "]"}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -137,7 +137,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"Options", "[", "Plot", "]"}], ",", 
         RowBox[{"Except", "[", "PlotRange", "]"}]}], "]"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"findAllRoots", "[", 
@@ -296,7 +296,7 @@ Cell[BoxData[{
   RowBox[{"(*", " ", 
    RowBox[{
    "End", " ", "Notebook", " ", "to", " ", "Package", " ", "conversion", " ", 
-    "code"}], " ", "*)"}], "\[IndentingNewLine]", "\n", 
+    "code"}], " ", "*)"}], "\n", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{"Standard", " ", "Boat", " ", "Library"}], " ", "*)"}], 
   "\[IndentingNewLine]", 
@@ -1487,15 +1487,17 @@ Cell[BoxData[{
           RowBox[{"boat", ",", "wNormal"}], "]"}], "]"}]}], ";", 
        "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"Graphics3D", "[", 
-        RowBox[{"{", "\[IndentingNewLine]", 
-         RowBox[{"waterPlane", ",", 
-          RowBox[{"render", "/.", "pointMassParts"}], ",", 
-          "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"(", 
-            RowBox[{"cobRender", "/.", "buoyParts"}], ")"}], "@", "cob"}]}], 
-         "\[IndentingNewLine]", "}"}], "\[IndentingNewLine]", "]"}]}]}], 
-     "\[IndentingNewLine]", "]"}]}], ";"}], 
+        RowBox[{
+         RowBox[{"{", "\[IndentingNewLine]", 
+          RowBox[{"waterPlane", ",", 
+           RowBox[{"render", "/.", "pointMassParts"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"cobRender", "/.", "buoyParts"}], ")"}], "@", "cob"}]}], 
+          "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Boxed", "->", "False"}]}], "\[IndentingNewLine]", "]"}]}]}],
+      "\[IndentingNewLine]", "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1830,7 +1832,8 @@ Cell[BoxData[{
    3.665174889147438*^9}, {3.665175126416152*^9, 3.665175158451404*^9}, {
    3.6651752840889397`*^9, 3.66517529474656*^9}, {3.665175798189698*^9, 
    3.665175894787457*^9}, {3.6651759273432503`*^9, 3.6651603554513683`*^9}, {
-   3.665161063122476*^9, 3.665161063658578*^9}, 3.665228449833336*^9}],
+   3.665161063122476*^9, 3.665161063658578*^9}, 3.665228449833336*^9, {
+   3.665386953528101*^9, 3.6653869540198183`*^9}, 3.665387003295739*^9}],
 
 Cell[BoxData[""], "Input",
  CellChangeTimes->{{3.6651739953052692`*^9, 3.665174000338977*^9}}]
@@ -1851,8 +1854,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 75108, 1812, 10702, "Input"],
-Cell[75669, 1834, 94, 1, 35, "Input"]
+Cell[558, 20, 75281, 1815, 10784, "Input"],
+Cell[75842, 1837, 94, 1, 35, "Input"]
 }
 ]
 *)
